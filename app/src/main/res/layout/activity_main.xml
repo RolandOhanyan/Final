@@ -1,39 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+    <!-- Top Section: Event Categories -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Loading.."
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.212" />
+        android:layout_alignParentTop="true">
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Today" />
+
+            <Button
+                android:id="@+id/buttonTomorrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Tomorrow" />
+
+            <Button
+                android:id="@+id/buttonThisWeekend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="This Weekend" />
+
+            <Button
+                android:id="@+id/buttonNearYou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Near You" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <!-- Middle Section: Event List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/eventRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:text="logout"
-        android:background="@color/red"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        android:layout_below="@id/buttonNearYou"
+        android:layout_marginTop="16dp" />
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
-      
+    <!-- Bottom Section: Navigation Bar -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_nav_menu" />
+</RelativeLayout>

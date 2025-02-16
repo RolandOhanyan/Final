@@ -1,7 +1,7 @@
 package com.example.afinal.rest;
 
 
-import static okhttp3.OkHttpClient.*;
+import okhttp3.OkHttpClient.*;
 
 import android.app.Activity;
 

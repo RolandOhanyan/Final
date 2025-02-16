@@ -18,6 +18,10 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -80,12 +84,30 @@ public class SignInActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
                         Toast.makeText(this, "Signed in as " + (user != null ? user.getDisplayName() : "Unknown"), Toast.LENGTH_SHORT).show();
+
+                        // ✅ Store user details in Firestore
+                        if (user != null) {
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            Map<String, Object> userData = new HashMap<>();
+                            userData.put("name", user.getDisplayName());
+                            userData.put("email", user.getEmail());
+                            userData.put("uid", user.getUid());
+
+                            db.collection("users").document(user.getUid())
+                                    .set(userData)
+                                    .addOnSuccessListener(aVoid ->
+                                            Toast.makeText(this, "User data saved!", Toast.LENGTH_SHORT).show())
+                                    .addOnFailureListener(e ->
+                                            Toast.makeText(this, "Failed to save user data", Toast.LENGTH_SHORT).show());
+                        }
+
                         navigateToMainActivity();
                     } else {
                         Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
 
     private void navigateToMainActivity() {
         Intent intent = new Intent(SignInActivity.this, MainActivity.class);
